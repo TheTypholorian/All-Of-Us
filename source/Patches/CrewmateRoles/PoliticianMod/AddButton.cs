@@ -42,7 +42,7 @@ namespace TownOfUs.CrewmateRoles.PoliticianMod
                 {
                     Role.RoleDictionary.Remove(role.Player.PlayerId);
                     var mayorRole = new Mayor(role.Player);
-                    mayorRole.Revealed = true;
+                    mayorRole.Revealed = false;
                     mayorRole.RegenTask();
                     Utils.Rpc(CustomRPC.Elect, role.Player.PlayerId);
                 }

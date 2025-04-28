@@ -506,6 +506,11 @@ namespace TownOfUs.Patches
 
                     return true;
                 } else if (sourcePlayer.Is(RoleEnum.Jailor) && MeetingHud.Instance) {
+                    if (chatText.ToLower().StartsWith("/jail ")) chatText = chatText[6..];
+                    else if (chatText.ToLower().StartsWith("/jail")) chatText = chatText[5..];
+                    else if (chatText.ToLower().StartsWith("/ jail ")) chatText = chatText[7..];
+                    else if (chatText.ToLower().StartsWith("/ jail")) chatText = chatText[6..];
+
                     if (PlayerControl.LocalPlayer.Is(RoleEnum.Jailor) || PlayerControl.LocalPlayer.IsJailed() || PlayerControl.LocalPlayer.Data.IsDead)
                     {
                         JailorMessage = true;
@@ -740,7 +745,6 @@ namespace TownOfUs.Patches
                         JailorMessage = false;
                     }
                 }
-                Logger.LogInfo("Dead? " + PlayerControl.LocalPlayer.Data.IsDead + " " + JailorMessage);
                 if (PlayerControl.LocalPlayer.Data.IsDead) {
                     var jailor = Role.GetRole<Jailor>(PlayerControl.LocalPlayer);
                     if (jailor.Jailed != null && jailor.Jailed.Data.PlayerName == playerName)

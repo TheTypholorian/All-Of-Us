@@ -32,6 +32,7 @@ namespace TownOfUs.CustomOption
 
         public static CustomHeaderOption CrewProtectiveRoles;
         public static CustomNumberOption AltruistOn;
+        public static CustomNumberOption TestOn;
         public static CustomNumberOption ClericOn;
         public static CustomNumberOption MedicOn;
         public static CustomNumberOption OracleOn;
@@ -271,6 +272,8 @@ namespace TownOfUs.CustomOption
         public static CustomNumberOption ReviveDuration;
         public static CustomNumberOption ReviveUses;
         public static CustomNumberOption ReviveRadius;
+
+        public static CustomHeaderOption Test;
 
         public static CustomHeaderOption Miner;
         public static CustomNumberOption MineCooldown;
@@ -599,6 +602,8 @@ namespace TownOfUs.CustomOption
 
             CrewProtectiveRoles = new CustomHeaderOption(num++, MultiMenu.crewmate, "Crewmate Protective Roles");
             AltruistOn = new CustomNumberOption(num++, MultiMenu.crewmate, "<color=#660000FF>Altruist</color>", 0f, 0f, 100f, 10f,
+                PercentFormat);
+            TestOn = new CustomNumberOption(num++, MultiMenu.crewmate, "<color=#660000FF>Test</color>", 0f, 0f, 100f, 10f,
                 PercentFormat);
             ClericOn = new CustomNumberOption(num++, MultiMenu.crewmate, "<color=#00FFB3FF>Cleric</color>", 0f, 0f, 100f, 10f,
                 PercentFormat);
@@ -1104,6 +1109,8 @@ namespace TownOfUs.CustomOption
                 new CustomNumberOption(num++, MultiMenu.crewmate, "Revive Uses", 3, 1, 5, 1);
             ReviveRadius =
                 new CustomNumberOption(num++, MultiMenu.crewmate, "Revive Radius", 1f, 0.25f, 5f, 0.25f, MultiplierFormat);
+
+            Test = new CustomHeaderOption(num++, MultiMenu.crewmate, "<color=#0066B3FF>Test</color>");
 
             Cleric =
                 new CustomHeaderOption(num++, MultiMenu.crewmate, "<color=#00FFB3FF>Cleric</color>");

@@ -19,8 +19,8 @@ namespace TownOfUs.Roles
         public Crewmate(PlayerControl player) : base(player)
         {
             Name = "Crewmate";
-            ImpostorText = () => "Do Your Tasks";
-            TaskText = () => "Do your tasks";
+            ImpostorText = () => "Do Your Tasks?";
+            TaskText = () => "Do your tasks?";
             Faction = Faction.Crewmates;
             RoleType = RoleEnum.Crewmate;
             AddToRoleHistory(RoleType);

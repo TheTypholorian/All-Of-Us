@@ -1719,6 +1719,9 @@ namespace TownOfUs
                 if (CustomGameOptions.AltruistOn > 0)
                     CrewmateProtectiveRoles.Add((typeof(Altruist), CustomGameOptions.AltruistOn, false || CustomGameOptions.UniqueRoles));
 
+                if (CustomGameOptions.TestOn > 0)
+                    CrewmateProtectiveRoles.Add((typeof(Test), CustomGameOptions.TestOn, false || CustomGameOptions.UniqueRoles));
+
                 if (CustomGameOptions.VigilanteOn > 0)
                     CrewmateKillingRoles.Add((typeof(Vigilante), CustomGameOptions.VigilanteOn, false || CustomGameOptions.UniqueRoles));
 

@@ -50,6 +50,8 @@ namespace TownOfUs
         Mercenary,
         Cleric,
 
+        Test,
+
         Miner,
         Swooper,
         Morphling,

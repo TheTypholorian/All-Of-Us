@@ -498,14 +498,16 @@ namespace TownOfUs.Patches
                         return false;
                     }
                 }
-                if ((chatText.ToLower().StartsWith("/jail") || chatText.ToLower().StartsWith("/ jail")) && sourcePlayer.Is(RoleEnum.Jailor) && MeetingHud.Instance)
-                {
+                if (chatText.ToLower().StartsWith("/public") || chatText.ToLower().StartsWith("/ public")) {
+                    if (chatText.ToLower().StartsWith("/public")) chatText = chatText[7..];
+                    else if (chatText.ToLower().StartsWith("/public ")) chatText = chatText[8..];
+                    else if (chatText.ToLower().StartsWith("/ public")) chatText = chatText[8..];
+                    else if (chatText.ToLower().StartsWith("/ public ")) chatText = chatText[9..];
+
+                    return true;
+                } else if (sourcePlayer.Is(RoleEnum.Jailor) && MeetingHud.Instance) {
                     if (PlayerControl.LocalPlayer.Is(RoleEnum.Jailor) || PlayerControl.LocalPlayer.IsJailed())
                     {
-                        if (chatText.ToLower().StartsWith("/jail")) chatText = chatText[5..];
-                        else if (chatText.ToLower().StartsWith("/jail ")) chatText = chatText[6..];
-                        else if (chatText.ToLower().StartsWith("/ jail")) chatText = chatText[6..];
-                        else if (chatText.ToLower().StartsWith("/ jail ")) chatText = chatText[7..];
                         JailorMessage = true;
                         if (sourcePlayer != PlayerControl.LocalPlayer && PlayerControl.LocalPlayer.IsJailed() && !sourcePlayer.Data.IsDead) sourcePlayer = PlayerControl.LocalPlayer;
                         return true;

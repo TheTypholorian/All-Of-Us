@@ -71,7 +71,6 @@ namespace TownOfUs
         public static int SwooperOn => (int)Generate.SwooperOn.Get();
         public static int ArsonistOn => (int)Generate.ArsonistOn.Get();
         public static int AltruistOn => (int)Generate.AltruistOn.Get();
-        public static int TestOn => (int)Generate.TestOn.Get();
         public static int UndertakerOn => (int)Generate.UndertakerOn.Get();
         public static int PhantomOn => (int)Generate.PhantomOn.Get();
         public static int HunterOn => (int)Generate.HunterOn.Get();

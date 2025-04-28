@@ -498,15 +498,15 @@ namespace TownOfUs.Patches
                         return false;
                     }
                 }
-                if (chatText.ToLower().StartsWith("/public") || chatText.ToLower().StartsWith("/ public")) {
-                    if (chatText.ToLower().StartsWith("/public")) chatText = chatText[7..];
-                    else if (chatText.ToLower().StartsWith("/public ")) chatText = chatText[8..];
-                    else if (chatText.ToLower().StartsWith("/ public")) chatText = chatText[8..];
+                if ((chatText.ToLower().StartsWith("/public") || chatText.ToLower().StartsWith("/ public")) && sourcePlayer.Is(RoleEnum.Jailor) && MeetingHud.Instance) {
+                    if (chatText.ToLower().StartsWith("/public ")) chatText = chatText[8..];
+                    else if (chatText.ToLower().StartsWith("/public")) chatText = chatText[7..];
                     else if (chatText.ToLower().StartsWith("/ public ")) chatText = chatText[9..];
+                    else if (chatText.ToLower().StartsWith("/ public")) chatText = chatText[8..];
 
                     return true;
                 } else if (sourcePlayer.Is(RoleEnum.Jailor) && MeetingHud.Instance) {
-                    if (PlayerControl.LocalPlayer.Is(RoleEnum.Jailor) || PlayerControl.LocalPlayer.IsJailed())
+                    if (PlayerControl.LocalPlayer.Is(RoleEnum.Jailor) || PlayerControl.LocalPlayer.IsJailed() || PlayerControl.LocalPlayer.Data.IsDead)
                     {
                         JailorMessage = true;
                         if (sourcePlayer != PlayerControl.LocalPlayer && PlayerControl.LocalPlayer.IsJailed() && !sourcePlayer.Data.IsDead) sourcePlayer = PlayerControl.LocalPlayer;
@@ -737,6 +737,21 @@ namespace TownOfUs.Patches
                     {
                         __instance.NameText.color = Colors.Jailor;
                         __instance.NameText.text = "Jailor";
+                        JailorMessage = false;
+                    }
+                }
+                Logger.LogInfo("Dead? " + PlayerControl.LocalPlayer.Data.IsDead + " " + JailorMessage);
+                if (PlayerControl.LocalPlayer.Data.IsDead) {
+                    var jailor = Role.GetRole<Jailor>(PlayerControl.LocalPlayer);
+                    if (jailor.Jailed != null && jailor.Jailed.Data.PlayerName == playerName)
+                    {
+                        __instance.NameText.color = jailor.Color;
+                        __instance.NameText.text = playerName + " (Jailed)";
+                    }
+                    else if (JailorMessage)
+                    {
+                        __instance.NameText.color = jailor.Color;
+                        __instance.NameText.text = playerName + " (Jailor)";
                         JailorMessage = false;
                     }
                 }

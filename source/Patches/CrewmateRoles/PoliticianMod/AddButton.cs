@@ -5,6 +5,7 @@ using TownOfUs.Roles;
 using UnityEngine;
 using UnityEngine.UI;
 using Object = UnityEngine.Object;
+using TownOfUs.CrewmateRoles.MayorMod;
 
 namespace TownOfUs.CrewmateRoles.PoliticianMod
 {
@@ -45,6 +46,7 @@ namespace TownOfUs.CrewmateRoles.PoliticianMod
                     mayorRole.Revealed = false;
                     mayorRole.RegenTask();
                     Utils.Rpc(CustomRPC.Elect, role.Player.PlayerId);
+                    AddRevealButton.AddMayorButtons(MeetingHud.Instance);
                 }
                 else
                 {

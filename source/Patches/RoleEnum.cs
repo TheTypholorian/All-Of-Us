@@ -44,7 +44,6 @@ namespace TownOfUs
         Warden,
         Jailor,
         SoulCollector,
-        RoleCollector,
         Lookout,
         Deputy,
         Plumber,

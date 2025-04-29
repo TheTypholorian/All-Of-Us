@@ -809,8 +809,7 @@ namespace TownOfUs
                         var politician = Utils.PlayerById(reader.ReadByte());
                         Role.RoleDictionary.Remove(politician.PlayerId);
                         var mayorRole2 = new Mayor(politician);
-                        mayorRole2.Revealed = true;
-                        AddRevealButton.RemoveAssassin(mayorRole2);
+                        mayorRole2.Revealed = false;
                         break;
 
                     case CustomRPC.Prosecute:

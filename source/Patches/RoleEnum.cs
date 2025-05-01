@@ -89,6 +89,7 @@ namespace TownOfUs
         Multitasker,
         DoubleShot,
         Underdog,
+        Anarchist,
         Frosty,
         SixthSense,
         Shy,

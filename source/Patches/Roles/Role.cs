@@ -933,9 +933,19 @@ namespace TownOfUs.Roles
                         bool loverFlag = role.LoverCriteria();
                         bool roleFlag = role.RoleCriteria();
                         bool gaFlag = role.GuardianAngelCriteria();
+                        bool anarchistFlag = false;
+
+                        foreach (var mod in Modifier.GetModifiers(player))
+                        {
+                            if (mod.ModifierType == ModifierEnum.Anarchist) {
+                                anarchistFlag = ((Anarchist)mod).Revealed;
+                                break;
+                            }
+                        }
+
                         player.NameText.text = role.NameText(
                             selfFlag || deadFlag || role.Local,
-                            selfFlag || deadFlag || impostorFlag || vampireFlag || roleFlag || gaFlag,
+                            selfFlag || deadFlag || impostorFlag || vampireFlag || roleFlag || gaFlag || anarchistFlag,
                             selfFlag || deadFlag,
                             loverFlag,
                             player

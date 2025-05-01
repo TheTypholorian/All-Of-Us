@@ -15,6 +15,7 @@ using TownOfUs.CrewmateRoles.VigilanteMod;
 using TownOfUs.ImpostorRoles.BlackmailerMod;
 using TownOfUs.ImpostorRoles.HypnotistMod;
 using TownOfUs.Modifiers.AssassinMod;
+using TownOfUs.Modifiers.AnarchistMod;
 using TownOfUs.NeutralRoles.DoomsayerMod;
 using TownOfUs.CrewmateRoles.ClericMod;
 
@@ -258,6 +259,7 @@ namespace TownOfUs.Patches
             AddJailButtons.AddJailorButtons(__instance);
             AddRevealButton.AddMayorButtons(__instance);
             AddRevealButtonPolitician.AddPoliticianButtons(__instance);
+            AddRevealButtonAnarchist.AddAnarchistButtons(__instance);
             AddProsecute.AddProsecuteButton(__instance);
             AddButton.AddSwapperButtons(__instance);
             AddButtonVigi.AddVigilanteButtons(__instance);

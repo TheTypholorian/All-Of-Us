@@ -128,6 +128,7 @@ namespace TownOfUs
         public static int MultitaskerOn => (int)Generate.MultitaskerOn.Get();
         public static int DoubleShotOn => (int)Generate.DoubleShotOn.Get();
         public static int UnderdogOn => (int)Generate.UnderdogOn.Get();
+        public static int AnarchistOn => (int)Generate.AnarchistOn.Get();
         public static int FrostyOn => (int)Generate.FrostyOn.Get();
         public static int SixthSenseOn => (int)Generate.SixthSenseOn.Get();
         public static int ShyOn => (int)Generate.ShyOn.Get();

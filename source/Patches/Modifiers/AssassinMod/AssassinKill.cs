@@ -159,6 +159,12 @@ namespace TownOfUs.Modifiers.AssassinMod
                     politician.RevealButton.Destroy();
                 }
 
+                if (player.Is(ModifierEnum.Anarchist))
+                {
+                    var anarchist = Modifier.GetModifier<Anarchist>(PlayerControl.LocalPlayer);
+                    anarchist.RevealButton.Destroy();
+                }
+
                 if (player.Is(RoleEnum.Mayor))
                 {
                     var mayor = Role.GetRole<Mayor>(PlayerControl.LocalPlayer);

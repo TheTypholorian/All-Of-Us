@@ -117,6 +117,7 @@ namespace TownOfUs.CustomOption
         public static CustomNumberOption DoubleShotOn;
         public static CustomNumberOption SaboteurOn;
         public static CustomNumberOption UnderdogOn;
+        public static CustomNumberOption AnarchistOn;
 
         public static CustomHeaderOption MapSettings;
         public static CustomToggleOption RandomMapEnabled;
@@ -750,6 +751,8 @@ namespace TownOfUs.CustomOption
             SaboteurOn = new CustomNumberOption(num++, MultiMenu.modifiers, "<color=#FF0000FF>Saboteur</color>", 0f, 0f, 100f, 10f,
                 PercentFormat);
             UnderdogOn = new CustomNumberOption(num++, MultiMenu.modifiers, "<color=#FF0000FF>Underdog</color>", 0f, 0f, 100f, 10f,
+                PercentFormat);
+            AnarchistOn = new CustomNumberOption(num++, MultiMenu.modifiers, "<color=#FF0000FF>Anarchist</color> (AoU)", 0f, 0f, 100f, 10f,
                 PercentFormat);
 
             RoleListSettings =

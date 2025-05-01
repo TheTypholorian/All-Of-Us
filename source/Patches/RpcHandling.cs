@@ -14,6 +14,7 @@ using TownOfUs.NeutralRoles.DoomsayerMod;
 using TownOfUs.CustomOption;
 using TownOfUs.Extensions;
 using TownOfUs.Modifiers.AssassinMod;
+using TownOfUs.Modifiers.AnarchistMod;
 using TownOfUs.NeutralRoles.ExecutionerMod;
 using TownOfUs.NeutralRoles.GuardianAngelMod;
 using TownOfUs.ImpostorRoles.MinerMod;
@@ -810,6 +811,13 @@ namespace TownOfUs
                         Role.RoleDictionary.Remove(politician.PlayerId);
                         var mayorRole2 = new Mayor(politician);
                         mayorRole2.Revealed = false;
+                        break;
+
+                    case CustomRPC.ElectAnarchist:
+                        var anarchist = Utils.PlayerById(reader.ReadByte());
+                        var anarchistRole = Modifier.GetModifier<Anarchist>(anarchist);
+                        anarchistRole.Revealed = true;
+                        AddRevealButtonAnarchist.RemoveAssassin(anarchistRole);
                         break;
 
                     case CustomRPC.Prosecute:
@@ -1935,6 +1943,9 @@ namespace TownOfUs
 
                 if (Check(CustomGameOptions.UnderdogOn))
                     ImpostorModifiers.Add((typeof(Underdog), CustomGameOptions.UnderdogOn));
+
+                if (Check(CustomGameOptions.AnarchistOn))
+                    ImpostorModifiers.Add((typeof(Anarchist), CustomGameOptions.AnarchistOn));
                 #endregion
                 #region Assassin Ability
                 AssassinAbility.Add((typeof(Assassin), CustomRPC.SetAssassin, 100));

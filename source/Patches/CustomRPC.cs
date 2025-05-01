@@ -73,6 +73,7 @@ namespace TownOfUs
         HunterStalk,
         AbilityTrigger,
         Elect,
+        ElectAnarchist,
         Fortify,
         Hypnotise,
         Jail,

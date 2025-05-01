@@ -62,6 +62,16 @@ namespace TownOfUs.CrewmateRoles.MayorMod
                         else
                             dictionary[playerVoteArea.VotedFor] = 2;
                     }
+                } else if (player.Is(ModifierEnum.Anarchist))
+                {
+                    var anarchist = Modifier.GetModifier<Anarchist>(player);
+                    if (anarchist.Revealed)
+                    {
+                        if (dictionary.TryGetValue(playerVoteArea.VotedFor, out var num2))
+                            dictionary[playerVoteArea.VotedFor] = num2 + 2;
+                        else
+                            dictionary[playerVoteArea.VotedFor] = 2;
+                    }
                 }
 
                 if (dictionary.TryGetValue(playerVoteArea.VotedFor, out var num))
@@ -203,6 +213,35 @@ namespace TownOfUs.CrewmateRoles.MayorMod
                             if (mayorRole.Revealed)
                             {
                                 if (voteState.VoterId == mayorRole.Player.PlayerId)
+                                {
+                                    if (playerInfo == null)
+                                    {
+                                        Debug.LogError(string.Format("Couldn't find player info for voter: {0}",
+                                            voteState.VoterId));
+                                    }
+                                    else if (i == 0 && voteState.SkippedVote)
+                                    {
+                                        __instance.BloopAVoteIcon(playerInfo, amountOfSkippedVoters, __instance.SkippedVoting.transform);
+                                        __instance.BloopAVoteIcon(playerInfo, amountOfSkippedVoters, __instance.SkippedVoting.transform);
+                                        amountOfSkippedVoters++;
+                                        amountOfSkippedVoters++;
+                                    }
+                                    else if (voteState.VotedForId == playerVoteArea.TargetPlayerId)
+                                    {
+                                        __instance.BloopAVoteIcon(playerInfo, allNums[i], playerVoteArea.transform);
+                                        __instance.BloopAVoteIcon(playerInfo, allNums[i], playerVoteArea.transform);
+                                        allNums[i]++;
+                                        allNums[i]++;
+                                    }
+                                }
+                            }
+                        }
+                        foreach (var anarchist in Modifier.GetModifiers(ModifierEnum.Anarchist))
+                        {
+                            var anarchistRole = (Anarchist)anarchist;
+                            if (anarchistRole.Revealed)
+                            {
+                                if (voteState.VoterId == anarchistRole.Player.PlayerId)
                                 {
                                     if (playerInfo == null)
                                     {

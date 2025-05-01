@@ -4,6 +4,8 @@ namespace TownOfUs.CustomOption
 {
     public class Generate
     {
+        public static CustomToggleOption ConvolutedMode;
+
         public static CustomHeaderOption CrewInvestigativeRoles;
         public static CustomNumberOption AurialOn;
         public static CustomNumberOption DetectiveOn;
@@ -550,6 +552,8 @@ namespace TownOfUs.CustomOption
         public static void GenerateAll()
         {
             var num = 0;
+
+            ConvolutedMode = new CustomToggleOption(num++, MultiMenu.main, "Make everything convoluted (AoU)", false);
 
             CrewInvestigativeRoles = new CustomHeaderOption(num++, MultiMenu.crewmate, "Crewmate Investigative Roles");
             AurialOn = new CustomNumberOption(num++, MultiMenu.crewmate, "<color=#B34D99FF>Aurial</color>", 0f, 0f, 100f, 10f,

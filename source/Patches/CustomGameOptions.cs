@@ -52,6 +52,7 @@ namespace TownOfUs
     }
     public static class CustomGameOptions
     {
+        public static bool ConvolutedMode => (bool)Generate.ConvolutedMode.Get();
         public static int PoliticianOn => (int)Generate.PoliticianOn.Get();
         public static int JesterOn => (int)Generate.JesterOn.Get();
         public static int SheriffOn => (int)Generate.SheriffOn.Get();

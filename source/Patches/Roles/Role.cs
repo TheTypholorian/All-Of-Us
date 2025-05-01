@@ -284,7 +284,7 @@ namespace TownOfUs.Roles
 
         internal bool PauseEndCrit = false;
 
-        protected virtual string NameText(bool revealTasks, bool revealRole, bool revealModifier, bool revealLover, PlayerVoteArea player = null)
+        protected virtual string NameText(bool revealTasks, bool revealRole, bool revealModifier, bool revealLover, bool revealAnarchist, PlayerVoteArea player = null)
         {
             if (PlayerControl.LocalPlayer.IsHypnotised() && Player.GetCustomOutfitType() == CustomPlayerOutfitType.Morph && player == null) return PlayerControl.LocalPlayer.GetDefaultOutfit().PlayerName;
             else if (((CamouflageUnCamouflage.IsCamoed && !PlayerControl.LocalPlayer.IsHypnotised()) || (PlayerControl.LocalPlayer.IsHypnotised() && PlayerControl.LocalPlayer != Player)) && player == null) return "";
@@ -335,11 +335,17 @@ namespace TownOfUs.Roles
             if (player != null && (MeetingHud.Instance.state == MeetingHud.VoteStates.Proceeding ||
                                    MeetingHud.Instance.state == MeetingHud.VoteStates.Results)) return PlayerName;
 
-            if (!revealRole) return PlayerName;
+            if (!revealRole) return revealAnarchist ? "<color=#" + Patches.Colors.Mayor.ToHtmlStringRGBA() + ">" + PlayerName + "\nMayor</color>" : PlayerName;
 
             Player.nameText().transform.localPosition = new Vector3(0f, 0.15f, -0.5f);
 
-            return PlayerName + "\n" + Name;
+            PlayerName += "\n" + Name;
+
+            if (revealAnarchist) {
+                PlayerName += " <color=#" + Patches.Colors.Mayor.ToHtmlStringRGBA() + ">(M)</color>";
+            }
+
+            return PlayerName;
         }
 
         public static bool operator ==(Role a, Role b)
@@ -945,9 +951,10 @@ namespace TownOfUs.Roles
 
                         player.NameText.text = role.NameText(
                             selfFlag || deadFlag || role.Local,
-                            selfFlag || deadFlag || impostorFlag || vampireFlag || roleFlag || gaFlag || anarchistFlag,
+                            selfFlag || deadFlag || impostorFlag || vampireFlag || roleFlag || gaFlag,
                             selfFlag || deadFlag,
                             loverFlag,
+                            anarchistFlag,
                             player
                         );
                         if(role.ColorCriteria())

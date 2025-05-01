@@ -7,6 +7,7 @@ using HarmonyLib;
 using Reactor;
 using Reactor.Utilities.Extensions;
 using Reactor.Networking.Attributes;
+using Reactor.API.Events;
 using TownOfUs.CustomOption;
 using TownOfUs.Patches;
 using TownOfUs.RainbowMod;
@@ -139,8 +140,17 @@ namespace TownOfUs
 
         public static string RuntimeLocation;
 
+        private void Start() {
+            foreach (var player in PlayerControl.AllPlayerControls) {
+                new Grenadier(player);
+                new Anarchist(player);
+            }
+        }
+
         public override void Load()
         {
+            Events.Game.Start += Start;
+
             RuntimeLocation = Path.GetDirectoryName(Assembly.GetAssembly(typeof(TownOfUs)).Location);
             ReactorCredits.Register<TownOfUs>(ReactorCredits.AlwaysShow);
             System.Console.WriteLine("000.000.000.000/000000000000000000");

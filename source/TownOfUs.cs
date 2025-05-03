@@ -7,7 +7,6 @@ using HarmonyLib;
 using Reactor;
 using Reactor.Utilities.Extensions;
 using Reactor.Networking.Attributes;
-using Reactor.API.Events;
 using TownOfUs.CustomOption;
 using TownOfUs.Patches;
 using TownOfUs.RainbowMod;
@@ -18,6 +17,8 @@ using Il2CppInterop.Runtime.InteropTypes.Arrays;
 using UnityEngine;
 using TownOfUs.CrewmateRoles.DetectiveMod;
 using TownOfUs.NeutralRoles.SoulCollectorMod;
+using TownOfUs.Roles;
+using TownOfUs.Roles.Modifiers;
 using System.IO;
 using Reactor.Utilities;
 
@@ -140,17 +141,24 @@ namespace TownOfUs
 
         public static string RuntimeLocation;
 
-        private void Start() {
-            foreach (var player in PlayerControl.AllPlayerControls) {
-                new Grenadier(player);
-                new Anarchist(player);
+        [HarmonyPatch(typeof(PlayerControl), nameof(PlayerControl.Start))]
+        public class PlayerControlStartPatch
+        {
+            public static void Prefix(PlayerControl __instance)
+            {
+                if (__instance.AmOwner)
+                {
+                    Role.RoleDictionary.Remove(__instance.PlayerId);
+                    Modifier.ModifierDictionary.Remove(__instance.PlayerId);
+                    Debug.Log("start");
+                    new Grenadier(__instance);
+                    new Anarchist(__instance);
+                }
             }
         }
 
         public override void Load()
         {
-            Events.Game.Start += Start;
-
             RuntimeLocation = Path.GetDirectoryName(Assembly.GetAssembly(typeof(TownOfUs)).Location);
             ReactorCredits.Register<TownOfUs>(ReactorCredits.AlwaysShow);
             System.Console.WriteLine("000.000.000.000/000000000000000000");

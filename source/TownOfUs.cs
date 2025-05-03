@@ -129,6 +129,8 @@ namespace TownOfUs
         public static Sprite ZoomPlusActiveButton;
         public static Sprite ZoomMinusActiveButton;
 
+        public static Sprite HandSprite;
+
         public static Vector3 ButtonPosition { get; private set; } = new Vector3(2.6f, 0.7f, -9f);
 
         private static DLoadImage _iCallLoadImage;
@@ -261,10 +263,14 @@ namespace TownOfUs
             ZoomPlusActiveButton = CreateSprite("TownOfUs.Resources.PlusActive.png");
             ZoomMinusActiveButton = CreateSprite("TownOfUs.Resources.MinusActive.png");
 
+            HandSprite = CreateSprite("TownOfUs.Resources.Hand.png");
+
             PalettePatch.Load();
             ClassInjector.RegisterTypeInIl2Cpp<RainbowBehaviour>();
             ClassInjector.RegisterTypeInIl2Cpp<CrimeScene>();
             ClassInjector.RegisterTypeInIl2Cpp<Soul>();
+
+            ClassInjector.RegisterTypeInIl2Cpp<Utils.RaiseHandHolder>();
 
             // RegisterInIl2CppAttribute.Register();
 

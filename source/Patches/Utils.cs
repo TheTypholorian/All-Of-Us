@@ -43,18 +43,20 @@ namespace TownOfUs
 
         public static void RaiseHand(PlayerControl player)
         {
-            var renderer = hands.Get(player.PlayerId);
-            
-            if (renderer != null) {
+            var renderer = hands[player.PlayerId];
+
+            if (renderer != null)
+            {
                 renderer.enabled = true;
             }
         }
 
         public static void LowerHand(PlayerControl player)
         {
-            var renderer = hands.Get(player.PlayerId);
-            
-            if (renderer != null) {
+            var renderer = hands[player.PlayerId];
+
+            if (renderer != null)
+            {
                 renderer.enabled = false;
             }
         }
@@ -70,14 +72,15 @@ namespace TownOfUs
 
                     renderer.sprite = TownOfUs.HandSprite;
                     renderer.enabled = false;
-                    hand.transform.position = state.transform.position + new Vector3(0.75f, 0.25f, 0f);
+                    hand.transform.position = state.transform.position + new Vector3(-0.8f, 0.25f, 0f);
                     hand.transform.localScale *= 0.8f;
                     hand.layer = 5;
                     hand.transform.parent = state.Buttons.transform.GetChild(0).gameObject.transform.parent.parent;
 
                     hands.Remove(state.TargetPlayerId);
-                    hands.Set(state.TargetPlayerId, renderer);
-                } catch (Exception e) {
+                    hands.Add(state.TargetPlayerId, renderer);
+                } catch (Exception e)
+                {
                     Debug.LogError(e.ToString());
                 }
             }

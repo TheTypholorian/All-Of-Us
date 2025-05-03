@@ -39,15 +39,24 @@ namespace TownOfUs
     {
         internal static bool ShowDeadBodies = false;
         private static NetworkedPlayerInfo voteTarget = null;
+        public static Dictionary<byte, SpriteRenderer> hands = new();
 
         public static void RaiseHand(PlayerControl player)
         {
-            HudManager.Instance.Chat.AddChat(player, "Raised hand");
+            var renderer = hands.Get(player.PlayerId);
+            
+            if (renderer != null) {
+                renderer.enabled = true;
+            }
         }
 
         public static void LowerHand(PlayerControl player)
         {
-            HudManager.Instance.Chat.AddChat(player, "Lowered hand");
+            var renderer = hands.Get(player.PlayerId);
+            
+            if (renderer != null) {
+                renderer.enabled = false;
+            }
         }
 
         public static void AddRaisedHands(MeetingHud __instance)
@@ -60,22 +69,18 @@ namespace TownOfUs
                     var renderer = hand.AddComponent<SpriteRenderer>();
 
                     renderer.sprite = TownOfUs.HandSprite;
+                    renderer.enabled = false;
                     hand.transform.position = state.transform.position + new Vector3(0.75f, 0.25f, 0f);
+                    hand.transform.localScale *= 0.8f;
                     hand.layer = 5;
                     hand.transform.parent = state.Buttons.transform.GetChild(0).gameObject.transform.parent.parent;
+
+                    hands.Remove(state.TargetPlayerId);
+                    hands.Set(state.TargetPlayerId, renderer);
                 } catch (Exception e) {
                     Debug.LogError(e.ToString());
                 }
             }
-        }
-
-        public class RaiseHandHolder : MonoBehaviour
-        {
-            public RaiseHandHolder(IntPtr ptr) : base(ptr)
-            {
-            }
-
-            public GameObject IconObject;
         }
 
         public static void Morph(PlayerControl player, PlayerControl MorphedPlayer)

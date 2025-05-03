@@ -269,8 +269,6 @@ namespace TownOfUs
             ClassInjector.RegisterTypeInIl2Cpp<CrimeScene>();
             ClassInjector.RegisterTypeInIl2Cpp<Soul>();
 
-            ClassInjector.RegisterTypeInIl2Cpp<Utils.RaiseHandHolder>();
-
             // RegisterInIl2CppAttribute.Register();
 
             DeadSeeGhosts = Config.Bind("Settings", "Dead See Other Ghosts", true, "Whether you see other dead players' ghosts while you're dead");

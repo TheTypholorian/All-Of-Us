@@ -39,6 +39,16 @@ namespace TownOfUs
         internal static bool ShowDeadBodies = false;
         private static NetworkedPlayerInfo voteTarget = null;
 
+        public static void RaiseHand(PlayerControl player)
+        {
+            HudManager.Instance.Chat.AddChat(player, "Raised hand");
+        }
+
+        public static void LowerHand(PlayerControl player)
+        {
+            HudManager.Instance.Chat.AddChat(player, "Lowered hand");
+        }
+
         public static void Morph(PlayerControl player, PlayerControl MorphedPlayer)
         {
             if (PlayerControl.LocalPlayer.IsHypnotised()) return;
@@ -1225,11 +1235,11 @@ namespace TownOfUs
 
         public static IEnumerator BaitReportDelay(PlayerControl killer, PlayerControl target)
         {
-            var extraDelay = Random.RandomRangeInt(0, (int) (100 * (CustomGameOptions.BaitMaxDelay - CustomGameOptions.BaitMinDelay) + 1));
+            var extraDelay = Random.RandomRangeInt(0, (int)(100 * (CustomGameOptions.BaitMaxDelay - CustomGameOptions.BaitMinDelay) + 1));
             if (CustomGameOptions.BaitMaxDelay <= CustomGameOptions.BaitMinDelay)
                 yield return new WaitForSeconds(CustomGameOptions.BaitMaxDelay + 0.01f);
             else
-                yield return new WaitForSeconds(CustomGameOptions.BaitMinDelay + 0.01f + extraDelay/100f);
+                yield return new WaitForSeconds(CustomGameOptions.BaitMinDelay + 0.01f + extraDelay / 100f);
             var bodies = Object.FindObjectsOfType<DeadBody>();
             if (AmongUsClient.Instance.AmHost)
             {
@@ -1430,17 +1440,22 @@ namespace TownOfUs
         }
 
         [HarmonyPatch(typeof(PlayerControl), nameof(PlayerControl.StartMeeting))]
-        class StartMeetingPatch {
-            public static void Prefix(PlayerControl __instance, [HarmonyArgument(0)] NetworkedPlayerInfo meetingTarget) {
+        class StartMeetingPatch
+        {
+            public static void Prefix(PlayerControl __instance, [HarmonyArgument(0)] NetworkedPlayerInfo meetingTarget)
+            {
                 voteTarget = meetingTarget;
             }
         }
 
         [HarmonyPatch(typeof(MeetingHud), nameof(MeetingHud.Update))]
-        class MeetingHudUpdatePatch {
-            static void Postfix(MeetingHud __instance) {
+        class MeetingHudUpdatePatch
+        {
+            static void Postfix(MeetingHud __instance)
+            {
                 // Deactivate skip Button if skipping on emergency meetings is disabled
-                if ((voteTarget == null && CustomGameOptions.SkipButtonDisable == DisableSkipButtonMeetings.Emergency) || (CustomGameOptions.SkipButtonDisable == DisableSkipButtonMeetings.Always)) {
+                if ((voteTarget == null && CustomGameOptions.SkipButtonDisable == DisableSkipButtonMeetings.Emergency) || (CustomGameOptions.SkipButtonDisable == DisableSkipButtonMeetings.Always))
+                {
                     __instance.SkipVoteButton.gameObject.SetActive(false);
                 }
             }

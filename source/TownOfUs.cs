@@ -151,8 +151,8 @@ namespace TownOfUs
                     Role.RoleDictionary.Remove(__instance.PlayerId);
                     Modifier.ModifierDictionary.Remove(__instance.PlayerId);
                     Debug.Log("start");
-                    new Grenadier(__instance);
-                    new Anarchist(__instance);
+                    //new Grenadier(__instance);
+                    //new Anarchist(__instance);
                 }
             }
         }

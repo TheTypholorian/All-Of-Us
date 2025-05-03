@@ -12,6 +12,7 @@ using Random = UnityEngine.Random;
 using TownOfUs.Extensions;
 using AmongUs.GameOptions;
 using TownOfUs.ImpostorRoles.TraitorMod;
+using System.Runtime.CompilerServices;
 
 namespace TownOfUs.Roles
 {
@@ -107,12 +108,24 @@ namespace TownOfUs.Roles
 
         internal virtual bool Criteria()
         {
-            return DeadCriteria() || ImpostorCriteria() || VampireCriteria() || LoverCriteria() || SelfCriteria() || RoleCriteria() || GuardianAngelCriteria() || Local;
+            return DeadCriteria() || ImpostorCriteria() || VampireCriteria() || LoverCriteria() || SelfCriteria() || RoleCriteria() || GuardianAngelCriteria() || AnarchistCriteria() || Local;
         }
 
         internal virtual bool ColorCriteria()
         {
-            return SelfCriteria() || DeadCriteria() || ((ColourImpostorCriteria() || VampireCriteria() || RoleCriteria() || GuardianAngelCriteria()) && (!PlayerControl.LocalPlayer.IsHypnotised() || MeetingHud.Instance));
+            return SelfCriteria() || DeadCriteria() || ((ColourImpostorCriteria() || VampireCriteria() || RoleCriteria() || GuardianAngelCriteria() || AnarchistCriteria()) && (!PlayerControl.LocalPlayer.IsHypnotised() || MeetingHud.Instance));
+        }
+
+        internal virtual bool AnarchistCriteria()
+        {
+            var anarchist = Modifier.GetModifier<Anarchist>(Player);
+
+            if (anarchist != null)
+            {
+                return anarchist.Revealed;
+            }
+
+            return false;
         }
 
         internal virtual bool DeadCriteria()
@@ -295,7 +308,7 @@ namespace TownOfUs.Roles
 
             foreach (var role in GetRoles(RoleEnum.GuardianAngel))
             {
-                var ga = (GuardianAngel) role;
+                var ga = (GuardianAngel)role;
                 if (Player == ga.target && ((Player == PlayerControl.LocalPlayer && CustomGameOptions.GATargetKnows)
                     || (PlayerControl.LocalPlayer.Data.IsDead && !ga.Player.Data.IsDead)))
                 {
@@ -305,7 +318,7 @@ namespace TownOfUs.Roles
 
             foreach (var role in GetRoles(RoleEnum.Executioner))
             {
-                var exe = (Executioner) role;
+                var exe = (Executioner)role;
                 if (Player == exe.target && PlayerControl.LocalPlayer.Data.IsDead && !exe.Player.Data.IsDead)
                 {
                     PlayerName += "<color=#8C4005FF> X</color>";
@@ -341,7 +354,8 @@ namespace TownOfUs.Roles
 
             PlayerName += "\n" + Name;
 
-            if (revealAnarchist) {
+            if (revealAnarchist)
+            {
                 PlayerName += " <color=#" + Patches.Colors.Mayor.ToHtmlStringRGBA() + ">(M)</color>";
             }
 
@@ -435,7 +449,7 @@ namespace TownOfUs.Roles
 
             return null;
         }
-        
+
         public static T GetRole<T>(PlayerControl player) where T : Role
         {
             return GetRole(player) as T;
@@ -760,7 +774,7 @@ namespace TownOfUs.Roles
                     GameManager.Instance.RpcEndGame(GameOverReason.CrewmatesByTask, false);
                     return false;
                 }
-                
+
                 var result = true;
                 foreach (var role in AllRoles)
                 {
@@ -943,7 +957,8 @@ namespace TownOfUs.Roles
 
                         foreach (var mod in Modifier.GetModifiers(player))
                         {
-                            if (mod.ModifierType == ModifierEnum.Anarchist) {
+                            if (mod.ModifierType == ModifierEnum.Anarchist)
+                            {
                                 anarchistFlag = ((Anarchist)mod).Revealed;
                                 break;
                             }
@@ -957,7 +972,7 @@ namespace TownOfUs.Roles
                             anarchistFlag,
                             player
                         );
-                        if(role.ColorCriteria())
+                        if (role.ColorCriteria())
                             player.NameText.color = role.Color;
                         player.NameText.enableWordWrapping = false;
                     }
@@ -1003,15 +1018,7 @@ namespace TownOfUs.Roles
                             bool loverFlag = role.LoverCriteria();
                             bool roleFlag = role.RoleCriteria();
                             bool gaFlag = role.GuardianAngelCriteria();
-                            bool anarchistFlag = false;
-
-                            foreach (var mod in Modifier.GetModifiers(player))
-                            {
-                                if (mod.ModifierType == ModifierEnum.Anarchist) {
-                                    anarchistFlag = ((Anarchist)mod).Revealed;
-                                    break;
-                                }
-                            }
+                            bool anarchistFlag = role.AnarchistCriteria();
 
                             player.nameText().text = role.NameText(
                                 selfFlag || deadFlag || role.Local,

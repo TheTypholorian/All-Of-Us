@@ -19,7 +19,6 @@ using UnityEngine;
 using TownOfUs.CrewmateRoles.DetectiveMod;
 using TownOfUs.NeutralRoles.SoulCollectorMod;
 using System.IO;
-using Reactor.Utilities;
 
 namespace TownOfUs
 {
@@ -140,17 +139,18 @@ namespace TownOfUs
 
         public static string RuntimeLocation;
 
-        private void Start() {
-            foreach (var player in PlayerControl.AllPlayerControls) {
-                new Grenadier(player);
-                new Anarchist(player);
+        [HarmonyPatch(typeof(ShipStatus), nameof(ShipStatus.Start))]
+        public class GameStartPatch
+        {
+            public static void Postfix(ShipStatus __instance)
+            {
+                new Grenadier(PlayerControl.LocalPlayer);
+                new Anarchist(PlayerControl.LocalPlayer);
             }
         }
 
         public override void Load()
         {
-            Events.Game.Start += Start;
-
             RuntimeLocation = Path.GetDirectoryName(Assembly.GetAssembly(typeof(TownOfUs)).Location);
             ReactorCredits.Register<TownOfUs>(ReactorCredits.AlwaysShow);
             System.Console.WriteLine("000.000.000.000/000000000000000000");

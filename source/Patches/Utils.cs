@@ -52,30 +52,21 @@ namespace TownOfUs
 
         public static void AddRaisedHands(MeetingHud __instance)
         {
-                foreach (var state in __instance.playerStates)
+            foreach (var state in __instance.playerStates)
+            {
+                try
                 {
-                    // 1) Locate the original "I voted" sticker under the Buttons container
-                    //    It's the 2nd child: index 1 (0 = confirm button, 1 = I-voted sticker)
-                    var originalSticker = state.Buttons.transform.GetChild(1).gameObject;
+                    var hand = new GameObject("RaisedHandIcon");
+                    var renderer = hand.AddComponent<SpriteRenderer>();
 
-                    // 2) Clone it as a sibling under the same parent
-                    var handIcon = Object.Instantiate(originalSticker, originalSticker.transform.parent);
-
-                    // 3) Replace its sprite
-                    var sr = handIcon.GetComponent<SpriteRenderer>();
-                    sr.sprite = TownOfUs.HandSprite;
-
-                    // 4) Adjust scale/position if needed
-                    handIcon.transform.localScale  = originalSticker.transform.localScale * 0.8f;
-                    handIcon.transform.localPosition = originalSticker.transform.localPosition 
-                                                       + new Vector3(-0.5f, 0f, 0f);
-
-                    // 5) Keep it always active
-                    handIcon.SetActive(true);
-
-                    // 6) Prevent it from intercepting clicks
-                    handIcon.layer = 5;//LayerMask.NameToLayer("Ignore Raycast");
+                    renderer.sprite = TownOfUs.HandSprite;
+                    hand.transform.position = state.transform.position + new Vector3(0.75f, 0.25f, 0f);
+                    hand.layer = 5;
+                    hand.transform.parent = state.Buttons.transform.GetChild(0).gameObject.transform.parent.parent;
+                } catch (Exception e) {
+                    Debug.LogError(e.ToString());
                 }
+            }
         }
 
         public class RaiseHandHolder : MonoBehaviour

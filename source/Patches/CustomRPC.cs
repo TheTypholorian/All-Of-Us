@@ -100,10 +100,13 @@ namespace TownOfUs
         SetPostRoles,
         SetPos,
         SetSettings,
-        
+
         RemoveAllBodies,
         CheckMurder,
 
-        SubmergedFixOxygen
+        SubmergedFixOxygen,
+
+        RaiseHand,
+        LowerHand,
     }
 }

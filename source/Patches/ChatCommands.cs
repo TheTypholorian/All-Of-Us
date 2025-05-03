@@ -16,7 +16,17 @@ namespace TownOfUs.Patches
             {
                 if (sourcePlayer == PlayerControl.LocalPlayer)
                 {
-                    if (chatText.ToLower().StartsWith("/crew") || chatText.ToLower().StartsWith("/ crew"))
+                    if (chatText.ToLower().StartsWith("/raise"))
+                    {
+                        Utils.Rpc(CustomRPC.RaiseHand, PlayerControl.LocalPlayer.PlayerId);
+                        Utils.RaiseHand(PlayerControl.LocalPlayer);
+                        return false;
+                    } else if (chatText.ToLower().StartsWith("/lower"))
+                    {
+                        Utils.Rpc(CustomRPC.LowerHand, PlayerControl.LocalPlayer.PlayerId);
+                        Utils.LowerHand(PlayerControl.LocalPlayer);
+                        return false;
+                    } else if (chatText.ToLower().StartsWith("/crew") || chatText.ToLower().StartsWith("/ crew"))
                     {
                         AddRoleMessage(RoleEnum.Crewmate);
                         return false;

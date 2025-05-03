@@ -1,6 +1,7 @@
 ﻿using HarmonyLib;
 using Rewired;
 using Rewired.Data;
+using System.Diagnostics;
 using System.Linq;
 using TownOfUs.Roles;
 using TownOfUs.Roles.Modifiers;
@@ -70,6 +71,11 @@ namespace TownOfUs
             if (__instance.state == MeetingHud.VoteStates.Discussion) return;
             var role = Role.GetRole(PlayerControl.LocalPlayer);
 
+            if (role == null)
+            {
+                return;
+            }
+
             foreach (var player in __instance.playerStates)
             {
                 if (!HighlightedPlayer) break;
@@ -80,7 +86,9 @@ namespace TownOfUs
                 else player.SetHighlighted(false);
             }
 
-            if (role is Vigilante || role.Player.Is(AbilityEnum.Assassin) || role.Player.Is(RoleEnum.Doomsayer))
+            if (role is Vigilante || 
+            role.Player.Is(AbilityEnum.Assassin) || 
+            role.Player.Is(RoleEnum.Doomsayer))
             {
                 dynamic guesser = role is Vigilante ? Role.GetRole<Vigilante>(role.Player) : Ability.GetAbility<Assassin>(role.Player);
                 if (guesser == null) guesser = Role.GetRole<Doomsayer>(role.Player);

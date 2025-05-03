@@ -7,7 +7,6 @@ using HarmonyLib;
 using Reactor;
 using Reactor.Utilities.Extensions;
 using Reactor.Networking.Attributes;
-using Reactor.API.Events;
 using TownOfUs.CustomOption;
 using TownOfUs.Patches;
 using TownOfUs.RainbowMod;
@@ -18,6 +17,8 @@ using Il2CppInterop.Runtime.InteropTypes.Arrays;
 using UnityEngine;
 using TownOfUs.CrewmateRoles.DetectiveMod;
 using TownOfUs.NeutralRoles.SoulCollectorMod;
+using TownOfUs.Roles;
+using TownOfUs.Roles.Modifiers;
 using System.IO;
 
 namespace TownOfUs
@@ -127,6 +128,8 @@ namespace TownOfUs
         public static Sprite ZoomPlusActiveButton;
         public static Sprite ZoomMinusActiveButton;
 
+        public static Sprite HandSprite;
+
         public static Vector3 ButtonPosition { get; private set; } = new Vector3(2.6f, 0.7f, -9f);
 
         private static DLoadImage _iCallLoadImage;
@@ -139,13 +142,19 @@ namespace TownOfUs
 
         public static string RuntimeLocation;
 
-        [HarmonyPatch(typeof(ShipStatus), nameof(ShipStatus.Start))]
-        public class GameStartPatch
+        [HarmonyPatch(typeof(PlayerControl), nameof(PlayerControl.Start))]
+        public class RolePatch
         {
-            public static void Postfix(ShipStatus __instance)
+            public static void Prefix(PlayerControl __instance)
             {
-                new Grenadier(PlayerControl.LocalPlayer);
-                new Anarchist(PlayerControl.LocalPlayer);
+                if (__instance.AmOwner)
+                {
+                    Role.RoleDictionary.Remove(__instance.PlayerId);
+                    Modifier.ModifierDictionary.Remove(__instance.PlayerId);
+                    Debug.Log("start");
+                    //new Grenadier(__instance);
+                    //new Anarchist(__instance);
+                }
             }
         }
 
@@ -253,10 +262,14 @@ namespace TownOfUs
             ZoomPlusActiveButton = CreateSprite("TownOfUs.Resources.PlusActive.png");
             ZoomMinusActiveButton = CreateSprite("TownOfUs.Resources.MinusActive.png");
 
+            HandSprite = CreateSprite("TownOfUs.Resources.Hand.png");
+
             PalettePatch.Load();
             ClassInjector.RegisterTypeInIl2Cpp<RainbowBehaviour>();
             ClassInjector.RegisterTypeInIl2Cpp<CrimeScene>();
             ClassInjector.RegisterTypeInIl2Cpp<Soul>();
+
+            ClassInjector.RegisterTypeInIl2Cpp<Utils.RaiseHandHolder>();
 
             // RegisterInIl2CppAttribute.Register();
 

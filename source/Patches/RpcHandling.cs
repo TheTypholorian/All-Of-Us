@@ -713,7 +713,7 @@ namespace TownOfUs
 
                 byte readByte, readByte1, readByte2;
                 sbyte readSByte, readSByte2;
-                switch ((CustomRPC) callId)
+                switch ((CustomRPC)callId)
                 {
                     case CustomRPC.SetRole:
                         var player = Utils.PlayerById(reader.ReadByte());
@@ -873,7 +873,8 @@ namespace TownOfUs
                         readByte2 = reader.ReadByte();
                         var amnesiac = Utils.PlayerById(readByte1);
                         var other = Utils.PlayerById(readByte2);
-                        switch (reader.ReadByte()) {
+                        switch (reader.ReadByte())
+                        {
                             case 0: // start
                                 if (AmongUsClient.Instance.AmHost && amnesiac.Is(RoleEnum.Amnesiac))
                                 {
@@ -949,7 +950,7 @@ namespace TownOfUs
                         break;
                     case CustomRPC.GlitchWin:
                         var theGlitch = Role.AllRoles.FirstOrDefault(x => x.RoleType == RoleEnum.Glitch);
-                        ((Glitch) theGlitch)?.Wins();
+                        ((Glitch)theGlitch)?.Wins();
                         break;
                     case CustomRPC.JuggernautWin:
                         var juggernaut = Role.AllRoles.FirstOrDefault(x => x.RoleType == RoleEnum.Juggernaut);
@@ -1247,7 +1248,7 @@ namespace TownOfUs
                         break;
                     case CustomRPC.ArsonistWin:
                         var theArsonistTheRole = Role.AllRoles.FirstOrDefault(x => x.RoleType == RoleEnum.Arsonist);
-                        ((Arsonist) theArsonistTheRole)?.Wins();
+                        ((Arsonist)theArsonistTheRole)?.Wins();
                         break;
                     case CustomRPC.WerewolfWin:
                         var theWerewolfTheRole = Role.AllRoles.FirstOrDefault(x => x.RoleType == RoleEnum.Werewolf);
@@ -1619,6 +1620,12 @@ namespace TownOfUs
                                 merc.Gold += 1;
                             }
                         }
+                        break;
+                    case CustomRPC.RaiseHand:
+                        Utils.RaiseHand(Utils.PlayerById(reader.ReadByte()));
+                        break;
+                    case CustomRPC.LowerHand:
+                        Utils.LowerHand(Utils.PlayerById(reader.ReadByte()));
                         break;
                 }
             }

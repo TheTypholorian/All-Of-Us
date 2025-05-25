@@ -268,7 +268,7 @@ namespace TownOfUs.Patches
             AddButtonAssassin.AddAssassinButtons(__instance);
             AddButtonDoom.AddDoomsayerButtons(__instance);
 
-            Utils.AddRaisedHands(__instance);
+            //Utils.AddRaisedHands(__instance);
             return;
         }
 

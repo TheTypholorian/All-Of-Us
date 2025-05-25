@@ -43,26 +43,31 @@ namespace TownOfUs
 
         public static void RaiseHand(PlayerControl player)
         {
+            /*
             var renderer = hands[player.PlayerId];
 
             if (renderer != null)
             {
                 renderer.enabled = true;
             }
+            */
         }
 
         public static void LowerHand(PlayerControl player)
         {
+            /*
             var renderer = hands[player.PlayerId];
 
             if (renderer != null)
             {
                 renderer.enabled = false;
             }
+            */
         }
 
         public static void AddRaisedHands(MeetingHud __instance)
         {
+            /*
             foreach (var state in __instance.playerStates)
             {
                 try
@@ -84,6 +89,7 @@ namespace TownOfUs
                     Debug.LogError(e.ToString());
                 }
             }
+            */
         }
 
         public static void Morph(PlayerControl player, PlayerControl MorphedPlayer)

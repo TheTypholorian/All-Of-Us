@@ -30,7 +30,7 @@ namespace TownOfUs.CrewmateRoles.JailorMod
             {
                 var jailor = Role.GetRole<Jailor>(PlayerControl.LocalPlayer);
                 if (jailor.Jailed == null || jailor.Jailed.Data.IsDead || jailor.Jailed.Data.Disconnected) return;
-                HudManager.Instance.Chat.AddChat(PlayerControl.LocalPlayer, "No longer use /jail, instead use /public to talk publicly and type normally to talk to jailee. Also, the dead can now read your messages.");
+                HudManager.Instance.Chat.AddChat(PlayerControl.LocalPlayer, "No longer use /jail, instead use /public to talk publicly and type normally to talk to jailee. Nobody but you and the jailee can see these messages.");
             }
         }
 

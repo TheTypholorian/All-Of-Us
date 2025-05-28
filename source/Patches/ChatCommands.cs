@@ -521,7 +521,7 @@ namespace TownOfUs.Patches
                     else if (chatText.ToLower().StartsWith("/ jail ")) chatText = chatText[7..];
                     else if (chatText.ToLower().StartsWith("/ jail")) chatText = chatText[6..];
 
-                    if (PlayerControl.LocalPlayer.Is(RoleEnum.Jailor) || PlayerControl.LocalPlayer.IsJailed() || PlayerControl.LocalPlayer.Data.IsDead)
+                    if (PlayerControl.LocalPlayer.Is(RoleEnum.Jailor) || PlayerControl.LocalPlayer.IsJailed())
                     {
                         JailorMessage = true;
                         if (sourcePlayer != PlayerControl.LocalPlayer && PlayerControl.LocalPlayer.IsJailed() && !sourcePlayer.Data.IsDead) sourcePlayer = PlayerControl.LocalPlayer;
@@ -752,20 +752,6 @@ namespace TownOfUs.Patches
                     {
                         __instance.NameText.color = Colors.Jailor;
                         __instance.NameText.text = "Jailor";
-                        JailorMessage = false;
-                    }
-                }
-                if (PlayerControl.LocalPlayer.Data.IsDead) {
-                    var jailor = Role.GetRole<Jailor>(PlayerControl.LocalPlayer);
-                    if (jailor.Jailed != null && jailor.Jailed.Data.PlayerName == playerName)
-                    {
-                        __instance.NameText.color = jailor.Color;
-                        __instance.NameText.text = playerName + " (Jailed)";
-                    }
-                    else if (JailorMessage)
-                    {
-                        __instance.NameText.color = jailor.Color;
-                        __instance.NameText.text = playerName + " (Jailor)";
                         JailorMessage = false;
                     }
                 }

@@ -279,6 +279,8 @@ namespace TownOfUs
             IL2CPPChainloader.Instance.Finished += LevelImpostorCompatibility.Initialize; // LI has a circular dependency on TOU, so we need to wait for LI to finish loading before we can initialize it
 
             ServerManager.DefaultRegions = new Il2CppReferenceArray<IRegionInfo>(new IRegionInfo[0]);
+
+            //Screen.SetResolution(2560, 1440, false);
         }
 
         public static Sprite CreateSprite(string name)
@@ -300,7 +302,7 @@ namespace TownOfUs
         public static void LoadImage(Texture2D tex, byte[] data, bool markNonReadable)
         {
             _iCallLoadImage ??= IL2CPP.ResolveICall<DLoadImage>("UnityEngine.ImageConversion::LoadImage");
-            var il2CPPArray = (Il2CppStructArray<byte>) data;
+            var il2CPPArray = (Il2CppStructArray<byte>)data;
             _iCallLoadImage.Invoke(tex.Pointer, il2CPPArray.Pointer, markNonReadable);
         }
 

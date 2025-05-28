@@ -40,6 +40,84 @@ namespace TownOfUs
         internal static bool ShowDeadBodies = false;
         private static NetworkedPlayerInfo voteTarget = null;
         public static Dictionary<byte, SpriteRenderer> hands = new();
+        public static GameObject meetingButtons = new GameObject("MeetingButtons");
+
+        public static T GetOrAddComponent<T>(this GameObject go)
+            where T : Component
+        {
+            if (go.TryGetComponent<T>(out var comp))
+            {
+                return comp;
+            }
+
+            return go.AddComponent<T>();
+        }
+
+        private static void Button()
+        {
+            Debug.Log("Button clicked");
+        }
+
+        public static void InitMeetingButtons(MeetingHud __instance)
+        {
+            // 1) Find the existing MeetingHud Canvas (it should be on the same GameObject)
+            var rootCanvas = __instance.GetComponentInParent<Canvas>();
+            if ((rootCanvas == null))
+            {
+                Debug.LogError("No Canvas found for MeetingHud!");
+                return;
+            }
+
+            // 2) Create the container GameObject if not already
+            if ((meetingButtons == null))
+            {
+                meetingButtons = new GameObject("MeetingButtonsContainer");
+            }
+            meetingButtons.transform.SetParent(rootCanvas.transform, false);
+
+            // 3) Ensure it’s using RectTransform
+            var rt = meetingButtons.GetOrAddComponent<RectTransform>();
+            rt.anchorMin = new Vector2(0f, 0f);
+            rt.anchorMax = new Vector2(1f, 0f);
+            rt.pivot = new Vector2(0.5f, 0f);
+            rt.anchoredPosition = new Vector2(0f, 10f); // 10px above bottom
+            rt.sizeDelta = new Vector2(0f, 50f); // 50px height
+
+            // 4) Add layout components
+            var hlg = meetingButtons.GetOrAddComponent<HorizontalLayoutGroup>();
+            hlg.childAlignment = TextAnchor.MiddleCenter;
+            hlg.spacing = 10f;
+            hlg.childForceExpandWidth = false;
+            hlg.childControlWidth = false;
+            hlg.childControlHeight = true;
+
+            // 5) Make container auto-size to its children
+            var csf = meetingButtons.GetOrAddComponent<ContentSizeFitter>();
+            csf.horizontalFit = ContentSizeFitter.FitMode.PreferredSize;
+            csf.verticalFit = ContentSizeFitter.FitMode.Unconstrained;
+
+            // 6) Populate buttons
+            int buttonCount = 4;
+            for (int i = 0; i < buttonCount; i++)
+            {
+                // a) Create button
+                var btnGO = new GameObject($"MyBtn{i}");
+                btnGO.transform.SetParent(meetingButtons.transform, false);
+
+                // b) Add Image and CanvasRenderer so it draws
+                var img = btnGO.AddComponent<Image>();
+                btnGO.AddComponent<CanvasRenderer>();
+                img.sprite = TownOfUs.ButtonSprite;
+
+                // c) Add Button component
+                var btn = btnGO.AddComponent<Button>();
+                btn.onClick.AddListener((UnityEngine.Events.UnityAction)Button);
+
+                // d) Size the button
+                var btnRT = btnGO.GetOrAddComponent<RectTransform>();
+                btnRT.sizeDelta = new Vector2(80f, 40f);
+            }
+        }
 
         public static void RaiseHand(PlayerControl player)
         {
@@ -68,18 +146,23 @@ namespace TownOfUs
                 try
                 {
                     var hand = new GameObject("RaisedHandIcon");
-                    var renderer = hand.AddComponent<SpriteRenderer>();
 
-                    renderer.sprite = TownOfUs.HandSprite;
-                    renderer.enabled = false;
-                    hand.transform.position = state.transform.position + new Vector3(-0.8f, 0.25f, 0f);
-                    hand.transform.localScale *= 0.8f;
+                    hand.transform.position = state.transform.position + new Vector3(-0.85f, 0.35f, 0f);
+                    hand.transform.localScale *= 0.75f;
                     hand.layer = 5;
                     hand.transform.parent = state.Buttons.transform.GetChild(0).gameObject.transform.parent.parent;
 
+                    var renderer = hand.AddComponent<SpriteRenderer>();
+
+                    renderer.sortingLayerName = renderer.sortingLayerName;
+                    renderer.sortingOrder++;
+                    renderer.sprite = TownOfUs.HandSprite;
+                    renderer.enabled = false;
+
                     hands.Remove(state.TargetPlayerId);
                     hands.Add(state.TargetPlayerId, renderer);
-                } catch (Exception e)
+                }
+                catch (Exception e)
                 {
                     Debug.LogError(e.ToString());
                 }

@@ -26,6 +26,8 @@ namespace TownOfUs.Patches
     {
         public static void Prefix(MeetingHud __instance)
         {
+            Utils.InitMeetingButtons(__instance);
+
             foreach (var role in Role.GetRoles(RoleEnum.Cleric))
             {
                 var clerRole = (Cleric)role;
@@ -234,7 +236,13 @@ namespace TownOfUs.Patches
                     }
 
                     var role = Role.GetRole(imi);
-                    var killsList = (role.Kills, role.CorrectKills, role.IncorrectKills, role.CorrectAssassinKills, role.IncorrectAssassinKills);
+                    var killsList = (
+                        role.Kills,
+                        role.CorrectKills,
+                        role.IncorrectKills,
+                        role.CorrectAssassinKills,
+                        role.IncorrectAssassinKills
+                    );
                     Role.RoleDictionary.Remove(imi.PlayerId);
                     var imitator = new Imitator(imi);
                     imitator.trappedPlayers = trappedPlayers;

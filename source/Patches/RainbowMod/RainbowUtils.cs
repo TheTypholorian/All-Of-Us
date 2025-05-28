@@ -131,7 +131,7 @@ public struct HSBColor
         }
 
         ret.h *= 1f / 360f;
-        ret.s = (dif / max) * 1f;
+        ret.s = dif / max * 1f;
         ret.b = max;
 
         return ret;

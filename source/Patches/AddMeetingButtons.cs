@@ -9,6 +9,7 @@ using TownOfUs.CrewmateRoles.ImitatorMod;
 using TownOfUs.CrewmateRoles.JailorMod;
 using TownOfUs.CrewmateRoles.MayorMod;
 using TownOfUs.CrewmateRoles.PoliticianMod;
+using TownOfUs.NeutralRoles.CultistMod;
 using TownOfUs.CrewmateRoles.ProsecutorMod;
 using TownOfUs.CrewmateRoles.SwapperMod;
 using TownOfUs.CrewmateRoles.VigilanteMod;
@@ -90,6 +91,13 @@ namespace TownOfUs.Patches
                             var mysticRole = Role.GetRole<Mystic>(PlayerControl.LocalPlayer);
                             mysticRole.BodyArrows.Values.DestroyAll();
                             mysticRole.BodyArrows.Clear();
+                        }
+
+                        if (PlayerControl.LocalPlayer.Is(RoleEnum.Mortitian))
+                        {
+                            var mysticRole = Role.GetRole<Mortitian>(PlayerControl.LocalPlayer);
+                            Object.Destroy(mysticRole.BodyArrow);
+                            mysticRole.BodyArrow = null;
                         }
 
                         if (PlayerControl.LocalPlayer.Is(RoleEnum.Transporter))
@@ -267,6 +275,7 @@ namespace TownOfUs.Patches
             AddJailButtons.AddJailorButtons(__instance);
             AddRevealButton.AddMayorButtons(__instance);
             AddRevealButtonPolitician.AddPoliticianButtons(__instance);
+            AddRevealButtonCultist.AddCultistButtons(__instance);
             AddRevealButtonAnarchist.AddAnarchistButtons(__instance);
             AddProsecute.AddProsecuteButton(__instance);
             AddButton.AddSwapperButtons(__instance);

@@ -108,5 +108,8 @@ namespace TownOfUs
 
         RaiseHand,
         LowerHand,
+
+        Appoint,
+        PriestExecute,
     }
 }

@@ -661,7 +661,7 @@ namespace TownOfUs
                 else if (canHaveModifier.Count > 0) Role.GenModifier<Modifier>(type, canHaveModifier);
             }
 
-            var exeTargets = PlayerControl.AllPlayerControls.ToArray().Where(x => x.Is(Faction.Crewmates) && !x.Is(ModifierEnum.Lover) && !x.Is(RoleEnum.Politician) && !x.Is(RoleEnum.Prosecutor) && !x.Is(RoleEnum.Swapper) && !x.Is(RoleEnum.Vigilante) && !x.Is(RoleEnum.Jailor)).ToList();
+            var exeTargets = PlayerControl.AllPlayerControls.ToArray().Where(x => x.Is(Faction.Crewmates) && !x.Is(ModifierEnum.Lover) && !x.Is(RoleEnum.Politician) && !x.Is(RoleEnum.Cultist) && !x.Is(RoleEnum.Priest) && !x.Is(RoleEnum.Prosecutor) && !x.Is(RoleEnum.Swapper) && !x.Is(RoleEnum.Vigilante) && !x.Is(RoleEnum.Jailor)).ToList();
             foreach (var role in Role.GetRoles(RoleEnum.Executioner))
             {
                 var exe = (Executioner)role;
@@ -674,8 +674,8 @@ namespace TownOfUs
                 }
             }
 
-            var goodGATargets = PlayerControl.AllPlayerControls.ToArray().Where(x => x.Is(Faction.Crewmates) && !x.Is(ModifierEnum.Lover)).ToList();
-            var evilGATargets = PlayerControl.AllPlayerControls.ToArray().Where(x => (x.Is(Faction.Impostors) || x.Is(Faction.NeutralKilling)) && !x.Is(ModifierEnum.Lover)).ToList();
+            var goodGATargets = PlayerControl.AllPlayerControls.ToArray().Where(x => x.Is(Faction.Crewmates)).ToList(); // Removed checks for lovers here, would be interesting to see how it works out
+            var evilGATargets = PlayerControl.AllPlayerControls.ToArray().Where(x => (x.Is(Faction.Impostors) || x.Is(Faction.NeutralKilling))).ToList();
             foreach (var role in Role.GetRoles(RoleEnum.GuardianAngel))
             {
                 var ga = (GuardianAngel)role;
@@ -833,6 +833,21 @@ namespace TownOfUs
                             var prosecutor = Utils.PlayerById(reader.ReadByte());
                             var prosRole = Role.GetRole<Prosecutor>(prosecutor);
                             prosRole.ProsecuteThisMeeting = true;
+                        }
+                        break;
+                    case CustomRPC.PriestExecute:
+                        var host1 = reader.ReadBoolean();
+                        if (host1 && AmongUsClient.Instance.AmHost)
+                        {
+                            var prosecutor = Utils.PlayerById(reader.ReadByte());
+                            var prosRole = Role.GetRole<Priest>(prosecutor);
+                            prosRole.ExecuteThisMeeting = true;
+                        }
+                        else if (!host1 && !AmongUsClient.Instance.AmHost)
+                        {
+                            var prosecutor = Utils.PlayerById(reader.ReadByte());
+                            var prosRole = Role.GetRole<Priest>(prosecutor);
+                            prosRole.ExecuteThisMeeting = true;
                         }
                         break;
                     case CustomRPC.Douse:
@@ -1029,28 +1044,47 @@ namespace TownOfUs
                     case CustomRPC.Camp:
                         var deputy = Utils.PlayerById(reader.ReadByte());
                         var deputyRole = Role.GetRole<Deputy>(deputy);
-                        switch (reader.ReadByte())
+                        if (deputyRole != null)
                         {
-                            default: // the reason why I do both is in case of desync
-                            case 0: //camp
-                                var camp = Utils.PlayerById(reader.ReadByte());
-                                deputyRole.Camping = camp;
-                                break;
-                            case 1: //camp trigger
-                                var killerTarget = Utils.PlayerById(reader.ReadByte());
-                                deputyRole.Killer = killerTarget;
-                                deputyRole.Camping = null;
-                                break;
-                            case 2: //shoot
-                                var shot = Utils.PlayerById(reader.ReadByte());
-                                if (shot == deputyRole.Killer && !shot.Is(RoleEnum.Pestilence) && !shot.IsBlessed())
-                                {
-                                    AddButtonDeputy.Shoot(deputyRole, shot);
-                                    if (shot.Is(Faction.Crewmates)) deputyRole.IncorrectKills += 1;
-                                    else deputyRole.CorrectKills += 1;
-                                }
-                                deputyRole.Killer = null;
-                                break;
+                            switch (reader.ReadByte())
+                            {
+                                default: // the reason why I do both is in case of desync
+                                case 0: //camp
+                                    var camp = Utils.PlayerById(reader.ReadByte());
+                                    deputyRole.Camping = camp;
+                                    break;
+                                case 1: //camp trigger
+                                    var killerTarget = Utils.PlayerById(reader.ReadByte());
+                                    deputyRole.Killer = killerTarget;
+                                    deputyRole.Camping = null;
+                                    break;
+                                case 2: //shoot
+                                    var shot = Utils.PlayerById(reader.ReadByte());
+                                    if (shot == deputyRole.Killer && !shot.Is(RoleEnum.Pestilence) && !shot.IsBlessed())
+                                    {
+                                        AddButtonDeputy.Shoot(deputyRole, shot);
+                                        if (shot.Is(Faction.Crewmates)) deputyRole.IncorrectKills += 1;
+                                        else deputyRole.CorrectKills += 1;
+                                    }
+                                    deputyRole.Killer = null;
+                                    break;
+                            }
+                        }
+                        else
+                        {
+                            var mort = Role.GetRole<Mortitian>(deputy);
+                            switch (reader.ReadByte())
+                            {
+                                default: // the reason why I do both is in case of desync
+                                case 0: //camp
+                                    var camp = Utils.PlayerById(reader.ReadByte());
+                                    mort.Camping = camp;
+                                    break;
+                                case 1: //camp trigger
+                                    var killerTarget = Utils.PlayerById(reader.ReadByte());
+                                    mort.Camping = null;
+                                    break;
+                            }
                         }
                         break;
                     case CustomRPC.Hypnotise:
@@ -1754,6 +1788,9 @@ namespace TownOfUs
                 if (CustomGameOptions.MysticOn > 0)
                     CrewmateInvestigativeRoles.Add((typeof(Mystic), CustomGameOptions.MysticOn, false || CustomGameOptions.UniqueRoles));
 
+                if (CustomGameOptions.MortitianOn > 0)
+                    CrewmateInvestigativeRoles.Add((typeof(Mortitian), CustomGameOptions.MortitianOn, false || CustomGameOptions.UniqueRoles));
+
                 if (CustomGameOptions.TrapperOn > 0)
                     CrewmateInvestigativeRoles.Add((typeof(Trapper), CustomGameOptions.TrapperOn, false || CustomGameOptions.UniqueRoles));
 
@@ -1808,6 +1845,9 @@ namespace TownOfUs
 
                 if (CustomGameOptions.SurvivorOn > 0)
                     NeutralBenignRoles.Add((typeof(Survivor), CustomGameOptions.SurvivorOn, false || CustomGameOptions.UniqueRoles));
+
+                if (CustomGameOptions.CultistOn > 0)
+                    NeutralBenignRoles.Add((typeof(Cultist), CustomGameOptions.CultistOn, false || CustomGameOptions.UniqueRoles));
 
                 if (CustomGameOptions.GuardianAngelOn > 0)
                     NeutralBenignRoles.Add((typeof(GuardianAngel), CustomGameOptions.GuardianAngelOn, false || CustomGameOptions.UniqueRoles));

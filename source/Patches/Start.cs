@@ -121,6 +121,13 @@ namespace TownOfUs.Patches
                 politician.LastCampaigned = politician.LastCampaigned.AddSeconds(CustomGameOptions.InitialCooldowns - CustomGameOptions.CampaignCd);
             }
 
+            if (PlayerControl.LocalPlayer.Is(RoleEnum.Cultist))
+            {
+                var politician = Role.GetRole<Cultist>(PlayerControl.LocalPlayer);
+                politician.LastCampaigned = DateTime.UtcNow;
+                politician.LastCampaigned = politician.LastCampaigned.AddSeconds(CustomGameOptions.InitialCooldowns - CustomGameOptions.CampaignCd);
+            }
+
             if (PlayerControl.LocalPlayer.Is(RoleEnum.Jailor))
             {
                 var jailor = Role.GetRole<Jailor>(PlayerControl.LocalPlayer);

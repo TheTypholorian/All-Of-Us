@@ -152,6 +152,11 @@ namespace TownOfUs
                 __instance.KillButton.graphic.sprite = Campaign;
                 flag = true;
             }
+            else if (PlayerControl.LocalPlayer.Is(RoleEnum.Cultist))
+            {
+                __instance.KillButton.graphic.sprite = Campaign;
+                flag = true;
+            }
             else if (PlayerControl.LocalPlayer.Is(RoleEnum.Warden))
             {
                 __instance.KillButton.graphic.sprite = Fortify;
@@ -173,6 +178,11 @@ namespace TownOfUs
                 flag = true;
             }
             else if (PlayerControl.LocalPlayer.Is(RoleEnum.Deputy))
+            {
+                __instance.KillButton.graphic.sprite = Camp;
+                flag = true;
+            }
+            else if (PlayerControl.LocalPlayer.Is(RoleEnum.Mortitian))
             {
                 __instance.KillButton.graphic.sprite = Camp;
                 flag = true;

@@ -54,6 +54,7 @@ namespace TownOfUs
     {
         //public static bool ConvolutedMode => (bool)Generate.ConvolutedMode.Get();
         public static int PoliticianOn => (int)Generate.PoliticianOn.Get();
+        public static int CultistOn => (int)Generate.CultistOn.Get();
         public static int JesterOn => (int)Generate.JesterOn.Get();
         public static int SheriffOn => (int)Generate.SheriffOn.Get();
         public static int JanitorOn => (int)Generate.JanitorOn.Get();
@@ -87,6 +88,7 @@ namespace TownOfUs
         public static int SurvivorOn => (int)Generate.SurvivorOn.Get();
         public static int GuardianAngelOn => (int)Generate.GuardianAngelOn.Get();
         public static int MysticOn => (int)Generate.MysticOn.Get();
+        public static int MortitianOn => (int)Generate.MortitianOn.Get();
         public static int BlackmailerOn => (int)Generate.BlackmailerOn.Get();
         public static int PlaguebearerOn => (int)Generate.PlaguebearerOn.Get();
         public static int WerewolfOn => (int)Generate.WerewolfOn.Get();

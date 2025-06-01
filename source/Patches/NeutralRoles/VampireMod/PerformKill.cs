@@ -210,6 +210,13 @@ namespace TownOfUs.NeutralRoles.VampireMod
                     mysticRole.BodyArrows.Clear();
                 }
 
+                if (PlayerControl.LocalPlayer.Is(RoleEnum.Mortitian))
+                {
+                    var mysticRole = Role.GetRole<Mortitian>(PlayerControl.LocalPlayer);
+                    UnityEngine.Object.Destroy(mysticRole.BodyArrow);
+                    mysticRole.BodyArrow = null;
+                }
+
                 if (PlayerControl.LocalPlayer.Is(RoleEnum.Transporter))
                 {
                     var transporterRole = Role.GetRole<Transporter>(PlayerControl.LocalPlayer);

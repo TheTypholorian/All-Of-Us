@@ -83,6 +83,7 @@ namespace TownOfUs.Patches {
                     else if (role.Value == RoleEnum.Survivor) { playerRole += "<color=#" + Patches.Colors.Survivor.ToHtmlStringRGBA() + ">Survivor</color> > "; }
                     else if (role.Value == RoleEnum.GuardianAngel) { playerRole += "<color=#" + Patches.Colors.GuardianAngel.ToHtmlStringRGBA() + ">Guardian Angel</color> > "; }
                     else if (role.Value == RoleEnum.Mystic) { playerRole += "<color=#" + Patches.Colors.Mystic.ToHtmlStringRGBA() + ">Mystic</color> > "; }
+                    else if (role.Value == RoleEnum.Mortitian) { playerRole += "<color=#" + Patches.Colors.Mortitian.ToHtmlStringRGBA() + ">Mortitian</color> > "; }
                     else if (role.Value == RoleEnum.Blackmailer) { playerRole += "<color=#" + Patches.Colors.Impostor.ToHtmlStringRGBA() + ">Blackmailer</color> > "; }
                     else if (role.Value == RoleEnum.Plaguebearer) { playerRole += "<color=#" + Patches.Colors.Plaguebearer.ToHtmlStringRGBA() + ">Plaguebearer</color> > "; }
                     else if (role.Value == RoleEnum.Pestilence) { playerRole += "<color=#" + Patches.Colors.Pestilence.ToHtmlStringRGBA() + ">Pestilence</color> > "; }
@@ -99,6 +100,8 @@ namespace TownOfUs.Patches {
                     else if (role.Value == RoleEnum.Venerer) { playerRole += "<color=#" + Patches.Colors.Impostor.ToHtmlStringRGBA() + ">Venerer</color> > "; }
                     else if (role.Value == RoleEnum.Aurial) { playerRole += "<color=#" + Patches.Colors.Aurial.ToHtmlStringRGBA() + ">Aurial</color> > "; }
                     else if (role.Value == RoleEnum.Politician) { playerRole += "<color=#" + Patches.Colors.Politician.ToHtmlStringRGBA() + ">Politician</color> > "; }
+                    else if (role.Value == RoleEnum.Cultist) { playerRole += "<color=#" + Patches.Colors.Cultist.ToHtmlStringRGBA() + ">Cultist</color> > "; }
+                    else if (role.Value == RoleEnum.Priest) { playerRole += "<color=#" + Patches.Colors.Priest.ToHtmlStringRGBA() + ">Priest</color> > "; }
                     else if (role.Value == RoleEnum.Warden) { playerRole += "<color=#" + Patches.Colors.Warden.ToHtmlStringRGBA() + ">Warden</color> > "; }
                     else if (role.Value == RoleEnum.Hypnotist) { playerRole += "<color=#" + Patches.Colors.Impostor.ToHtmlStringRGBA() + ">Hypnotist</color> > "; }
                     else if (role.Value == RoleEnum.Jailor) { playerRole += "<color=#" + Patches.Colors.Jailor.ToHtmlStringRGBA() + ">Jailor</color> > "; }
@@ -127,6 +130,7 @@ namespace TownOfUs.Patches {
                 if (playerControl.Is(ModifierEnum.Disperser)) playerRole += " (<color=#" + Patches.Colors.Impostor.ToHtmlStringRGBA() + ">Disperser</color>)";
                 if (playerControl.Is(ModifierEnum.Multitasker)) playerRole += " (<color=#" + Patches.Colors.Multitasker.ToHtmlStringRGBA() + ">Multitasker</color>)";
                 if (playerControl.Is(ModifierEnum.DoubleShot)) playerRole += " (<color=#" + Patches.Colors.Impostor.ToHtmlStringRGBA() + ">Double Shot</color>)";
+                if (playerControl.Is(ModifierEnum.Anarchist)) playerRole += " (<color=#" + Patches.Colors.Impostor.ToHtmlStringRGBA() + ">Anarchist</color>)";
                 if (playerControl.Is(ModifierEnum.Underdog)) playerRole += " (<color=#" + Patches.Colors.Impostor.ToHtmlStringRGBA() + ">Underdog</color>)";
                 if (playerControl.Is(ModifierEnum.Frosty)) playerRole += " (<color=#" + Patches.Colors.Frosty.ToHtmlStringRGBA() + ">Frosty</color>)";
                 if (playerControl.Is(ModifierEnum.SixthSense)) playerRole += " (<color=#" + Patches.Colors.SixthSense.ToHtmlStringRGBA() + ">Sixth Sense</color>)";

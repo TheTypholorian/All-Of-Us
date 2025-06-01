@@ -23,6 +23,7 @@ namespace TownOfUs.Patches
         public readonly static Color Transporter = new Color(0f, 0.93f, 1f, 1f);
         public readonly static Color Medium = new Color(0.65f, 0.5f, 1f, 1f);
         public readonly static Color Mystic = new Color(0.3f, 0.6f, 0.9f, 1f);
+        public readonly static Color Mortitian = new Color(0.2f, 0.2f, 0.2f, 1f);
         public readonly static Color Trapper = new Color(0.65f, 0.82f, 0.7f, 1f);
         public readonly static Color Detective = new Color(0.3f, 0.3f, 1f, 1f);
         public readonly static Color Imitator = new Color(0.7f, 0.85f, 0.3f, 1f);
@@ -55,6 +56,8 @@ namespace TownOfUs.Patches
         public readonly static Color Vampire = new Color(0.15f, 0.15f, 0.15f, 1f);
         public readonly static Color SoulCollector = new Color(0.6f, 1f, 0.8f, 1f);
         public readonly static Color Mercenary = new Color(0.55f, 0.4f, 0.6f, 1f);
+        public readonly static Color Cultist = new Color(0.6f, 0f, 0.4f, 1f);
+        public readonly static Color Priest = new Color(0.9f, 0.9f, 0.6f, 1f);
 
         //Imposter Colors
         public readonly static Color Impostor = Palette.ImpostorRed;

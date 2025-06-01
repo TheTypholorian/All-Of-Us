@@ -53,6 +53,7 @@ namespace TownOfUs.Roles
             if (CustomGameOptions.TransporterOn > 0) ColorMapping.Add("Transporter", Colors.Transporter);
             if (CustomGameOptions.MediumOn > 0) ColorMapping.Add("Medium", Colors.Medium);
             if (CustomGameOptions.MysticOn > 0) ColorMapping.Add("Mystic", Colors.Mystic);
+            if (CustomGameOptions.MortitianOn > 0) ColorMapping.Add("Mortitian", Colors.Mortitian);
             if (CustomGameOptions.DetectiveOn > 0) ColorMapping.Add("Detective", Colors.Detective);
             if (CustomGameOptions.ImitatorOn > 0) ColorMapping.Add("Imitator", Colors.Imitator);
             if (CustomGameOptions.ProsecutorOn > 0) ColorMapping.Add("Prosecutor", Colors.Prosecutor);

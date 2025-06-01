@@ -876,6 +876,11 @@ namespace TownOfUs.Roles
                     ((Mystic)role).BodyArrows.Values.DestroyAll();
                     ((Mystic)role).BodyArrows.Clear();
                 }
+                foreach (var role in AllRoles.Where(x => x.RoleType == RoleEnum.Mortitian))
+                {
+                    ((Mortitian)role).BodyArrow.Destroy();
+                    ((Mortitian)role).BodyArrow = null;
+                }
                 foreach (var role in AllRoles.Where(x => x.RoleType == RoleEnum.Scavenger))
                 {
                     ((Scavenger)role).PreyArrow.Destroy();

@@ -368,7 +368,7 @@ namespace TownOfUs
         public static bool IsCrewKiller(this PlayerControl player)
         {
             if (!CustomGameOptions.CrewKillersContinue) return false;
-            if (player.Is(RoleEnum.Mayor) || player.Is(RoleEnum.Politician) || player.Is(RoleEnum.Swapper) ||
+            if (player.Is(RoleEnum.Mayor) || player.Is(RoleEnum.Politician) || player.Is(RoleEnum.Cultist) || player.Is(RoleEnum.Priest) || player.Is(RoleEnum.Swapper) ||
                 (player.Is(RoleEnum.Sheriff) && CustomGameOptions.SheriffKillsNK)) return true;
             else if (player.Is(RoleEnum.Hunter))
             {
@@ -999,12 +999,30 @@ namespace TownOfUs
                         Coroutines.Start(FlashCoroutine(Color.red));
                     }
                 }
+                if (PlayerControl.LocalPlayer.Is(RoleEnum.Mortitian))
+                {
+                    var deputy = Role.GetRole<Mortitian>(PlayerControl.LocalPlayer);
+                    if (target == deputy.Camping)
+                    {
+                        Rpc(CustomRPC.Camp, PlayerControl.LocalPlayer.PlayerId, (byte)1, 0);
+                        deputy.Camping = null;
+                        Coroutines.Start(FlashCoroutine(Color.red));
+                    }
+                }
                 foreach (var role in Role.GetRoles(RoleEnum.Deputy))
                 {
                     var dep = (Deputy)role;
                     if (target == dep.Camping)
                     {
                         dep.Killer = killer;
+                        dep.Camping = null;
+                    }
+                }
+                foreach (var role in Role.GetRoles(RoleEnum.Mortitian))
+                {
+                    var dep = (Mortitian)role;
+                    if (target == dep.Camping)
+                    {
                         dep.Camping = null;
                     }
                 }
@@ -1727,6 +1745,11 @@ namespace TownOfUs
             if (PlayerControl.LocalPlayer.Is(RoleEnum.Politician))
             {
                 var politician = Role.GetRole<Politician>(PlayerControl.LocalPlayer);
+                politician.LastCampaigned = DateTime.UtcNow;
+            }
+            if (PlayerControl.LocalPlayer.Is(RoleEnum.Cultist))
+            {
+                var politician = Role.GetRole<Cultist>(PlayerControl.LocalPlayer);
                 politician.LastCampaigned = DateTime.UtcNow;
             }
             foreach (var role in Role.GetRoles(RoleEnum.Altruist))

@@ -13,6 +13,7 @@ namespace TownOfUs.CustomOption
         public static CustomNumberOption InvestigatorOn;
         public static CustomNumberOption LookoutOn;
         public static CustomNumberOption MysticOn;
+        public static CustomNumberOption MortitianOn;
         public static CustomNumberOption SeerOn;
         public static CustomNumberOption SnitchOn;
         public static CustomNumberOption SpyOn;
@@ -51,6 +52,7 @@ namespace TownOfUs.CustomOption
         public static CustomNumberOption GuardianAngelOn;
         public static CustomNumberOption MercenaryOn;
         public static CustomNumberOption SurvivorOn;
+        public static CustomNumberOption CultistOn;
 
         public static CustomHeaderOption NeutralEvilRoles;
         public static CustomNumberOption DoomsayerOn;
@@ -569,6 +571,8 @@ namespace TownOfUs.CustomOption
                 PercentFormat);
             MysticOn = new CustomNumberOption(num++, MultiMenu.crewmate, "<color=#4D99E6FF>Mystic</color>", 0f, 0f, 100f, 10f,
                 PercentFormat);
+            MortitianOn = new CustomNumberOption(num++, MultiMenu.crewmate, "<color=#4D99E6FF>Mortitian</color>", 0f, 0f, 100f, 10f,
+                PercentFormat);
             SeerOn = new CustomNumberOption(num++, MultiMenu.crewmate, "<color=#FFCC80FF>Seer</color>", 0f, 0f, 100f, 10f,
                 PercentFormat);
             SnitchOn = new CustomNumberOption(num++, MultiMenu.crewmate, "<color=#D4AF37FF>Snitch</color>", 0f, 0f, 100f, 10f,
@@ -635,6 +639,8 @@ namespace TownOfUs.CustomOption
             MercenaryOn = new CustomNumberOption(num++, MultiMenu.neutral, "<color=#8C6699FF>Mercenary</color>", 0f, 0f, 100f, 10f,
                 PercentFormat);
             SurvivorOn = new CustomNumberOption(num++, MultiMenu.neutral, "<color=#FFE64DFF>Survivor</color>", 0f, 0f, 100f, 10f,
+                PercentFormat);
+            CultistOn = new CustomNumberOption(num++, MultiMenu.neutral, "<color=#990066FF>Cultist</color>", 0f, 0f, 100f, 10f,
                 PercentFormat);
 
             NeutralEvilRoles = new CustomHeaderOption(num++, MultiMenu.neutral, "Neutral Evil Roles");

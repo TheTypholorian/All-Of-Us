@@ -211,6 +211,12 @@ namespace TownOfUs.CrewmateRoles.DeputyMod
                     politician.RevealButton.Destroy();
                 }
 
+                if (player.Is(RoleEnum.Cultist))
+                {
+                    var politician = Role.GetRole<Cultist>(PlayerControl.LocalPlayer);
+                    politician.RevealButton.Destroy();
+                }
+
                 if (player.Is(ModifierEnum.Anarchist))
                 {
                     var anarchist = Modifier.GetModifier<Anarchist>(PlayerControl.LocalPlayer);

@@ -220,6 +220,11 @@ namespace TownOfUs.Patches
                         AddRoleMessage(RoleEnum.Mystic);
                         return false;
                     }
+                    else if (chatText.ToLower().StartsWith("/mor") || chatText.ToLower().StartsWith("/ mor"))
+                    {
+                        AddRoleMessage(RoleEnum.Mortitian);
+                        return false;
+                    }
                     else if (chatText.ToLower().StartsWith("/bmer") || chatText.ToLower().StartsWith("/ bmer") ||
                         chatText.ToLower().StartsWith("/black") || chatText.ToLower().StartsWith("/ black"))
                     {
@@ -352,6 +357,16 @@ namespace TownOfUs.Patches
                     else if (chatText.ToLower().StartsWith("/cler") || chatText.ToLower().StartsWith("/ cler"))
                     {
                         AddRoleMessage(RoleEnum.Cleric);
+                        return false;
+                    }
+                    else if (chatText.ToLower().StartsWith("/cul") || chatText.ToLower().StartsWith("/ cul"))
+                    {
+                        AddRoleMessage(RoleEnum.Cultist);
+                        return false;
+                    }
+                    else if (chatText.ToLower().StartsWith("/pr") || chatText.ToLower().StartsWith("/ pr"))
+                    {
+                        AddRoleMessage(RoleEnum.Priest);
                         return false;
                     }
                     else if (chatText.ToLower().StartsWith("/lover") || chatText.ToLower().StartsWith("/ lover"))
@@ -617,6 +632,8 @@ namespace TownOfUs.Patches
                     PlayerControl.LocalPlayer, "The Guardian Angel is a neutral benign role that needs their target to win to win themselves.");
                 if (role == RoleEnum.Mystic) HudManager.Instance.Chat.AddChat(
                     PlayerControl.LocalPlayer, "The Mystic is a crewmate who gets an alert when a player dies.");
+                if (role == RoleEnum.Mortitian) HudManager.Instance.Chat.AddChat(
+                    PlayerControl.LocalPlayer, "The Mortitian is a crewmate combination of Mystic, Deputy, and Amnesiac. At the start of every round, they camp a player. When and if that player dies, the Mortitian gets a notification that the camp died, and they get a persistent arrow towards the body.");
                 if (role == RoleEnum.Blackmailer) HudManager.Instance.Chat.AddChat(
                     PlayerControl.LocalPlayer, "The Blackmailer is an impostor who can silence other players.");
                 if (role == RoleEnum.Plaguebearer) HudManager.Instance.Chat.AddChat(PlayerControl.LocalPlayer,
@@ -671,6 +688,10 @@ namespace TownOfUs.Patches
                     PlayerControl.LocalPlayer, "The Mercenary is a neutral benign who can guard other players. Guarded players who are interacted with gain currency for the Mercenary to use to bribe players. The Mercenary wins if any bribed player lives and wins.");
                 if (role == RoleEnum.Cleric) HudManager.Instance.Chat.AddChat(
                     PlayerControl.LocalPlayer, "The Cleric is a crewmate who can barrier other players temporarily or cleanse players. Barriered players cannot be killed. Cleansing a player removes all negative effects (e.g. blackmail, douse).");
+                if (role == RoleEnum.Cultist) HudManager.Instance.Chat.AddChat(PlayerControl.LocalPlayer,
+                    "The Cultist is a neutral whose objective is to indoctrinate other players into their cult, and become a Priest.");
+                if (role == RoleEnum.Priest) HudManager.Instance.Chat.AddChat(PlayerControl.LocalPlayer,
+                    "The Priest is a crewmate that can make their cult members all vote for one person. The Priest also has a shield during the round (but not during the meeting), that they can transfer to other players in their cult for one round.");
             }
 
             public static void AddModifierMessage(ModifierEnum modifier)

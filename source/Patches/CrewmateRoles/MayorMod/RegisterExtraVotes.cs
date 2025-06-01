@@ -46,10 +46,34 @@ namespace TownOfUs.CrewmateRoles.MayorMod
             for (var i = 0; i < __instance.playerStates.Length; i++)
             {
                 var playerVoteArea = __instance.playerStates[i];
+                Debug.Log("a" + playerVoteArea.VotedFor);
+
+                foreach (var role in Role.GetRoles(RoleEnum.Priest))
+                {
+                    var priest = (Priest)role;
+
+                    if (priest.ExecuteThisMeeting)
+                    {
+                        if (priest.CultMembers.Contains(playerVoteArea.TargetPlayerId))
+                        {
+                            foreach (var playerState in MeetingHud.Instance.playerStates)
+                            {
+                                if (playerState.TargetPlayerId == priest.Player.PlayerId)
+                                {
+                                    Debug.Log("b" + playerVoteArea.VotedFor);
+                                    playerVoteArea.VotedFor = playerState.VotedFor;
+                                    Debug.Log("c" + playerVoteArea.VotedFor);
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                }
+
                 if (!playerVoteArea.DidVote
-                    || playerVoteArea.AmDead
-                    || playerVoteArea.VotedFor == PlayerVoteArea.MissedVote
-                    || playerVoteArea.VotedFor == PlayerVoteArea.DeadVote) continue;
+                        || playerVoteArea.AmDead
+                        || playerVoteArea.VotedFor == PlayerVoteArea.MissedVote
+                        || playerVoteArea.VotedFor == PlayerVoteArea.DeadVote) continue;
 
                 var player = Utils.PlayerById(playerVoteArea.TargetPlayerId);
                 if (player.Is(RoleEnum.Mayor))
@@ -62,7 +86,8 @@ namespace TownOfUs.CrewmateRoles.MayorMod
                         else
                             dictionary[playerVoteArea.VotedFor] = 2;
                     }
-                } else if (player.Is(ModifierEnum.Anarchist))
+                }
+                else if (player.Is(ModifierEnum.Anarchist))
                 {
                     var anarchist = Modifier.GetModifier<Anarchist>(player);
                     if (anarchist.Revealed)

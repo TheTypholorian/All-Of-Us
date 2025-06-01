@@ -110,6 +110,7 @@ namespace TownOfUs.NeutralRoles.AmnesiacMod
                 case RoleEnum.Transporter:
                 case RoleEnum.Medium:
                 case RoleEnum.Mystic:
+                case RoleEnum.Mortitian:
                 case RoleEnum.Trapper:
                 case RoleEnum.Detective:
                 case RoleEnum.Imitator:
@@ -406,6 +407,14 @@ namespace TownOfUs.NeutralRoles.AmnesiacMod
                 mysticRole.BodyArrows.Values.DestroyAll();
                 mysticRole.BodyArrows.Clear();
                 HudManager.Instance.KillButton.gameObject.SetActive(false);
+            }
+
+            else if (role == RoleEnum.Mortitian)
+            {
+                var deputyRole = Role.GetRole<Mortitian>(amnesiac);
+                deputyRole.Camping = null;
+                deputyRole.CampedThisRound = false;
+                deputyRole.StartingCooldown = deputyRole.StartingCooldown.AddSeconds(-10f);
             }
 
             else if (role == RoleEnum.Transporter)

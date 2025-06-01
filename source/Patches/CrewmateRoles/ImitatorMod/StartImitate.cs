@@ -66,6 +66,7 @@ namespace TownOfUs.CrewmateRoles.ImitatorMod
             else if (imitatorRole == RoleEnum.Investigator) new Investigator(imi);
             else if (imitatorRole == RoleEnum.Lookout) new Lookout(imi);
             else if (imitatorRole == RoleEnum.Mystic) new Mystic(imi);
+            else if (imitatorRole == RoleEnum.Mortitian) new Mortitian(imi);
             else if (imitatorRole == RoleEnum.Oracle) new Oracle(imi);
             else if (imitatorRole == RoleEnum.Seer) new Seer(imi);
             else if (imitatorRole == RoleEnum.Snitch)
@@ -134,6 +135,7 @@ namespace TownOfUs.CrewmateRoles.ImitatorMod
             else if (imitatorRole == RoleEnum.Medium) new Medium(imi);
             else if (imitatorRole == RoleEnum.Plumber) new Plumber(imi);
             else if (imitatorRole == RoleEnum.Politician) new Politician(imi);
+            else if (imitatorRole == RoleEnum.Cultist) new Cultist(imi);
             else if (imitatorRole == RoleEnum.Prosecutor) new Prosecutor(imi);
             else if (imitatorRole == RoleEnum.Swapper) new Swapper(imi);
             else if (imitatorRole == RoleEnum.Transporter) new Transporter(imi);
